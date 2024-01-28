@@ -9,7 +9,7 @@ int linearprobe(int address);
 
 int main()
 {
-	cout<<"Bhushan = ";
+	cout<<"latecommers = ";
     int i, n, x[10];
     char ch;
     std::cout << "Enter the number of elements: ";
