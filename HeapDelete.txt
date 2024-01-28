@@ -107,7 +107,7 @@ int main() {
     MinHeap minHeap;
 
     int numElements;
-    std::cout << "Bhushan 09: \n";
+    std::cout << "latecommers: \n";
     std::cout << "Enter the number of elements: ";
     std::cin >> numElements;
 
