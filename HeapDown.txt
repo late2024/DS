@@ -1,0 +1,88 @@
+#include<iostream>
+using namespace std;
+class Heap{
+	private:
+		int*data;
+		int capacity;
+		int size;
+	public:
+		Heap(int capacity){
+			this->capacity = capacity;
+			this->data = new int[capacity];
+			this->size = 0;
+		}
+		~Heap()
+		{
+			delete[] data;
+		}
+		void insert(int value){
+			if(size == capacity){
+				cout<<"Heap is Full"<<endl;
+				return;
+			}
+			int i = size;
+			data[i] = value;
+			while(i>0 && data[(i-1)/2]<data[i])
+			{
+				swap(data[(i-1)/2], data[i]);
+				i = (i-1)/2;
+			}
+			size++;
+		}
+		int extractMax(){
+			if(size == 0)
+			{
+				cout<<"Heap is Empty"<<endl;
+				return -1;
+			}
+			int max = data[0];
+			data[0] = data[size-1];
+			size--;
+			heapifyDown(0);
+			return max;
+		}
+		void heapifyDown(int index){
+			int leftChildIndex = 2 * index + 1;
+			int rightChildIndex = 2 * index + 2;
+			int largestChildIndex = index;
+			if(leftChildIndex<size&&data[leftChildIndex]>data[largestChildIndex])
+			{
+				largestChildIndex = leftChildIndex;
+			}
+			if(rightChildIndex<size&&data[rightChildIndex]>data[largestChildIndex])
+			{
+				largestChildIndex = rightChildIndex;
+			}
+			if(largestChildIndex != index)
+			{
+				swap(data[index], data[largestChildIndex]);
+				heapifyDown(largestChildIndex);
+			}
+		}
+		void printHeap(){
+			for(int i=0; i<size; i++){
+				cout<<data[i]<<" ";
+			}
+			cout<<endl;
+		}
+	};
+	int main(){
+		cout<<"Bhushan = ";
+		Heap heap(10);
+		
+		heap.insert(5);
+		heap.insert(3);
+		heap.insert(1);
+		heap.insert(2);
+		heap.insert(4);
+		
+		cout<<"Heap: ";
+		heap.printHeap();
+		
+		cout<<"Extracting max: " <<heap.extractMax()<<endl;
+		
+		cout<<"Updated Heap: ";
+		heap.printHeap();
+		
+		return 0;
+	}

@@ -1,0 +1,129 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Node* head = NULL;
+
+void insert(int newdata)
+{
+    struct Node* newnode = (struct Node*) malloc(sizeof(struct Node));
+    struct Node* ptr = head;
+    newnode->data = newdata;
+    newnode->next = head;
+    if (head != NULL)
+    {
+        while (ptr->next != head)
+            ptr = ptr->next;
+        ptr->next = newnode;
+    }
+    else
+    {
+        newnode->next = newnode;
+        head = newnode;
+    }
+}
+
+void display()
+{
+    struct Node* ptr;
+    ptr = head;
+    do
+    {
+        cout << ptr->data << " ";
+        ptr = ptr->next;
+    } while (ptr != head);
+}
+
+int count()
+{
+    int count = 0;
+    struct Node* ptr = head;
+    do
+    {
+        count++;
+        ptr = ptr->next;
+    } while (ptr != head);
+    return count;
+}
+
+void deleteNode(int key)
+{
+    if (head == NULL)
+        return;
+
+    struct Node *temp = head, *prev = NULL;
+
+    // Find the node with the given key
+    while (temp->data != key)
+    {
+        if (temp->next == head)
+        {
+            cout << "Node with data " << key << " not found in the list." << endl;
+            return;
+        }
+        prev = temp;
+        temp = temp->next;
+    }
+
+    // If the node is the only node in the list
+    if (temp->next == head && prev == NULL)
+    {
+        free(temp);
+        head = NULL;
+        return;
+    }
+
+    // If the node is the first node in the list
+    if (temp == head)
+    {
+        prev = head;
+        while (prev->next != head)
+            prev = prev->next;
+        head = temp->next;
+        prev->next = head;
+    }
+    else if (temp->next == head) // If the node is the last node in the list
+    {
+        prev->next = head;
+    }
+    else // If the node is in the middle of the list
+    {
+        prev->next = temp->next;
+    }
+
+    free(temp);
+}
+
+int main()
+{
+    cout << "Bhushan 09:\n";
+    insert(3);
+    insert(1);
+    insert(7);
+    insert(2);
+    insert(9);
+
+    cout << "The Circular Linked List is: ";
+    display();
+
+    cout << "\nThe number of nodes in the circular linked list is: " << count() << endl;
+
+    int keyToDelete = 7;
+    cout << "Deleting node with data " << keyToDelete << "...\n";
+    deleteNode(keyToDelete);
+
+    cout << "The Circular Linked List after deletion is: ";
+    display();
+
+    cout << "\nThe number of nodes in the circular linked list is: " << count() << endl;
+
+    return 0;
+}
+
+

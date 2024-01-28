@@ -1,0 +1,107 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+struct SNode
+{
+    int data;
+    int Col;
+    int Row;
+    SNode* next;
+};
+
+struct MatrixNode
+{
+    vector<vector<int>> Matrix;
+    SNode* SNPTR;
+};
+
+SNode* CreateList(int Row, int Col, int data)
+{
+    SNode* New = new SNode();
+    New->data = data;
+    New->Col = Col;
+    New->Row = Row;
+    New->next = NULL;
+    return New;
+}
+
+MatrixNode* AddInList(MatrixNode* MNhead, int Row, int Col, int data)
+{
+    MatrixNode* Mptr = MNhead;
+    SNode* New = CreateList(Row, Col, data);
+    if (Mptr->SNPTR == NULL)
+    {
+        Mptr->SNPTR = New;
+        return MNhead;
+    }
+    New->next = Mptr->SNPTR;
+    Mptr->SNPTR = New;
+    return MNhead;
+}
+
+MatrixNode* ConstructSparseMatrix(MatrixNode* MNhead, vector<vector<int>> Matrix, SNode* SNhead)
+{
+    MatrixNode* Mptr = MNhead;
+    if (MNhead == nullptr)
+    {
+        MNhead = new MatrixNode();
+        MNhead->Matrix = Matrix;
+        MNhead->SNPTR = SNhead;
+    }
+    Mptr = MNhead;
+    for (int i = 0; i < Mptr->Matrix.size(); i++)
+    {
+        for (int j = 0; j < Mptr->Matrix[i].size(); j++)
+        {
+            if (Matrix[i][j] != 0)
+                MNhead = AddInList(MNhead, i, j, Matrix[i][j]);
+        }
+    }
+    return MNhead;
+}
+
+void DisplayMatrix(MatrixNode* MNhead)
+{
+    for (int i = 0; i < MNhead->Matrix.size(); i++)
+    {
+        for (int j = 0; j < MNhead->Matrix[i].size(); j++)
+        {
+            cout << MNhead->Matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void DisplayLinkedList(MatrixNode* MNhead)
+{
+    SNode* current = MNhead->SNPTR;
+    while (current != nullptr)
+    {
+        cout << "Row: " << current->Row << " Col: " << current->Col << " Data: " << current->data << endl;
+        current = current->next;
+    }
+}
+
+int main()
+{
+	cout<<"Bhushan_09: ";
+    MatrixNode* MNhead = nullptr;
+    SNode* SNhead = nullptr;
+    vector<vector<int>> Matrix = {
+        {0, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0},
+        {0, 0, 2, 0, 0},
+        {0, 3, 0, 0, 4},
+        {0, 0, 5, 0, 0},
+    };
+    MNhead = ConstructSparseMatrix(MNhead, Matrix, SNhead);
+
+    cout << "Sparse Matrix:" << endl;
+    DisplayMatrix(MNhead);
+
+    cout << "Linked List Representation:" << endl;
+    DisplayLinkedList(MNhead);
+
+    return 0;
+}

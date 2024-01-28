@@ -1,0 +1,72 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+struct Node
+{
+    int data;
+    struct Node *next;
+};
+
+struct Node* head = NULL;
+
+void insert(int newdata)
+{
+    struct Node* newnode = (struct Node*) malloc(sizeof(struct Node));
+    struct Node* ptr = head;
+    newnode->data = newdata;
+    newnode->next = head;
+    if (head != NULL)
+    {
+        while (ptr->next != head)
+            ptr = ptr->next;
+        ptr->next = newnode;
+    }
+    else
+    {
+        newnode->next = newnode;
+        head = newnode;
+    }
+}
+
+void display()
+{
+    struct Node* ptr;
+    ptr = head;
+    do
+    {
+        cout << ptr->data << " ";
+        ptr = ptr->next;
+    } while (ptr != head);
+}
+
+int count()
+{
+    int count = 0;
+    struct Node* ptr = head;
+    do
+    {
+        count++;
+        ptr = ptr->next;
+    } while (ptr != head);
+    return count;
+}
+
+int main()
+{
+    cout << "Bhushan 09:\n";
+    insert(3);
+    insert(1);
+    insert(7);
+    insert(2);
+    insert(9);
+
+    cout << "The Circular Linked List is: ";
+    display();
+
+    cout << "\nThe number of nodes in the circular linked list is: " << count() << endl;
+
+    return 0;
+}
+
+

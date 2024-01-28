@@ -1,0 +1,207 @@
+#include<iostream>
+using namespace std;
+class node
+{
+public:
+int data;
+int key;
+node *next;
+node *prev;
+};
+node *head =NULL;
+node *last = NULL;
+node *current = NULL;
+bool isEmpty()
+{
+return head == NULL;
+}
+int length()
+{
+int length = 0;
+node *current;
+for(current = head; current != NULL; current = current ->next)
+{
+length++;
+}
+return length;
+}
+void displayForward()
+{
+node *ptr = head;
+printf("\n[");
+while(ptr != NULL)
+{
+printf("(%d%d) ",ptr->key,ptr->data);
+ptr = ptr->next;
+}
+printf("]");
+}
+void displayBackward()
+{
+node *ptr= last;
+printf("\n[");
+while(ptr != NULL)
+{
+printf("(%d%d) ",ptr->key,ptr->data);
+ptr = ptr->prev;
+}
+printf("]");
+}
+void insertFirst(int key, int data)
+{
+node *link = new node();
+link->key = key;
+link->data= data;
+if(isEmpty())
+{
+last = link;
+}
+else
+{
+head->prev = link;
+}
+link->next = head;
+head = link;
+}
+void insertLast(int key, int data)
+{
+node *link = new node();
+link->key = key;
+link->data= data;
+if(isEmpty())
+{
+last = link;
+}
+else
+{
+last->next=link;
+link->prev = last;
+}
+last = link;
+}
+node* deleteFirst(){
+node *tempLink = head;
+if(head->next ==NULL)
+{
+last = NULL;
+}
+else
+{
+head->next->prev = NULL;
+}
+head = head->next;
+return tempLink;
+}
+node* deleteLast()
+{
+node *tempLink= last;
+if(head->next == NULL)
+{
+head = NULL;
+}
+else
+{
+last->prev->next = NULL;
+}
+last = last->prev;
+return tempLink;
+}
+node* del(int key)
+{
+node* current = head;
+node* previous = NULL;
+if(head == NULL)
+{
+return NULL;
+}
+while(current->key != key)
+{
+if(current->next == NULL)
+{
+return NULL;
+}
+else
+{
+previous = current;
+current = current->next;
+}
+}
+if(current == head)
+{
+head = head->next;
+}
+else
+{
+current->prev->next = current->next;
+}
+if(current == last)
+{
+last = current->prev;
+}
+else
+{
+current->next->prev = current->prev;
+}
+return current;
+}
+bool insertAfter(int key, int newkey, int data)
+{
+node *current = head;
+if(head == NULL)
+{
+return false;
+}
+while(current->key != key)
+{
+if(current ->next == NULL)
+{
+return false;
+}
+else
+{
+current = current->next;
+}
+}
+node *newLink = new node();
+newLink->key = newkey;
+newLink->data = data;
+if(current == last)
+{
+newLink->next = NULL;
+last = newLink;
+}
+else{
+newLink->next = current->next;
+current->next->prev = newLink;
+}
+newLink->prev = current;
+current->next = newLink;
+return true;
+}
+main()
+{
+insertFirst(1,10);
+insertFirst(2,20);
+insertFirst(3,30);
+insertFirst(4,1);
+insertFirst(5,40);
+insertFirst(6,56);
+printf("\n List (First to Last):");
+displayForward();
+printf("\n List (Last to First):");
+displayBackward();
+printf("\n List , after deleting first record:");
+deleteFirst();
+displayForward();
+printf("\n List , after deleting Last record:");
+deleteLast();
+displayForward();
+printf("\n List , insert after key(4):");
+insertAfter(4,7,13);
+displayForward();
+printf("\n List ,after delete key(4):");
+del(4);
+displayForward();
+
+}
+

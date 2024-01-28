@@ -1,0 +1,130 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+// Fix the typo in the struct definition, change `struct node` to `struct Node`
+struct Node
+{
+    int coeff;
+    int pow;
+    struct Node* next;
+};
+
+// Fix the function definition to use the correct type for the second parameter
+void create_node(int x, int y, struct Node** temp)
+{
+    struct Node* poly, * z;
+    z = *temp;
+    if (z == NULL)
+    {
+        poly = (struct Node*)malloc(sizeof(struct Node));
+        poly->coeff = x;
+        poly->pow = y;
+        *temp = poly;
+
+        poly->next = (struct Node*)malloc(sizeof(struct Node));
+        poly = poly->next;
+        poly->next = NULL;
+    }
+    else {
+        poly->coeff = x;
+        poly->pow = y;
+        poly->next = (struct Node*)malloc(sizeof(struct Node));
+        poly = poly->next;
+        poly->next = NULL;
+    }
+}
+
+// Fix the function name in the parameters, change `struct node* poly` to `struct Node* poly`
+void polyadd(struct Node* poly1, struct Node* poly2, struct Node* poly)
+{
+    while (poly1->next && poly2->next)
+    {
+        if (poly1->pow > poly2->pow)
+        {
+            poly->pow = poly1->pow;
+            poly->coeff = poly1->coeff;
+            poly1 = poly1->next;
+        }
+        else if (poly1->pow < poly2->pow)
+        {
+            poly->pow = poly2->pow;
+            poly->coeff = poly2->coeff;
+            poly2 = poly2->next;
+        }
+        else
+        {
+            poly->pow = poly1->pow;
+            poly->coeff = poly1->coeff + poly2->coeff;
+            poly1 = poly1->next;
+            poly2 = poly2->next;
+        }
+        poly->next = (struct Node*)malloc(sizeof(struct Node));
+        poly = poly->next;
+        poly->next = NULL;
+    }
+    while (poly1->next || poly2->next)
+    {
+        if (poly1->next)
+        {
+            poly->pow = poly1->pow;
+            poly->coeff = poly1->coeff;
+            poly1 = poly1->next;
+        }
+        if (poly2->next)
+        {
+            poly->pow = poly2->pow;
+            poly->coeff = poly2->coeff;
+            poly2 = poly2->next;
+        }
+        poly->next = (struct Node*)malloc(sizeof(struct Node));
+        poly = poly->next;
+        poly->next = NULL;
+    }
+}
+
+// Fix the typo in the function definition, change `sturct Node* node` to `struct Node* node`
+void show(struct Node* node)
+{
+    while (node->next != NULL)
+    {
+        cout << node->coeff << "x^" << node->pow;
+        node = node->next;
+        if (node->coeff >= 0)
+        {
+            if (node->next != NULL)
+                cout << "+";
+        }
+    }
+}
+
+int main()
+{
+    cout << "Bhushan_09 :\n";
+
+    struct Node* poly1 = NULL;
+    struct Node* poly2 = NULL;
+    struct Node* poly = NULL;
+
+    create_node(5, 2, &poly1);
+    create_node(4, 1, &poly1);
+    create_node(2, 0, &poly1);
+
+    create_node(-5, 1, &poly2);
+    create_node(-5, 0, &poly2);
+
+    cout << "1st Number:";
+    show(poly1);
+    cout << "\n2nd Number:";
+    show(poly2);
+    poly = (struct Node*)malloc(sizeof(struct Node));
+
+    polyadd(poly1, poly2, poly);
+
+    cout << "\nAdded polynomial:";
+    show(poly);
+
+    return 0;
+}
+
+

@@ -1,0 +1,65 @@
+class ArrayQueue {
+private:
+    int *arr;
+    int front;
+    int rear;
+    int capacity;
+
+public:
+    ArrayQueue(int capacity) {
+        this->capacity = capacity;
+        arr = new int[capacity];
+        front = 0;
+        rear = -1;
+    }
+
+    bool isEmpty() {
+        return front > rear;
+    }
+
+    bool isFull() {
+        return rear == capacity - 1;
+    }
+
+    void enqueue(int data) {
+        if (isFull()) {
+            cout << "Queue is full" << endl;
+            return;
+        }
+
+        rear++;
+        arr[rear] = data;
+    }
+
+    int dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty" << endl;
+            return -1;
+        }
+
+        int data = arr[front];
+        front++;
+        return data;
+    }
+
+    int frontElement() {
+        if (isEmpty()) {
+            cout << "Queue is empty" << endl;
+            return -1;
+        }
+
+        return arr[front];
+    }
+
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is empty" << endl;
+            return;
+        }
+
+        for (int i = front; i <= rear; i++) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};

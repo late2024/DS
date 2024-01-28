@@ -1,0 +1,55 @@
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+int isOperator(char c) {
+  if (c == '+' || c == '-' || c == '*' || c == '/') {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+int evaluate(char c, int operand1, int operand2) {
+  switch (c) {
+    case '+':
+      return operand1 + operand2;
+    case '-':
+      return operand1 - operand2;
+    case '*':
+      return operand1 * operand2;
+    case '/':
+      return operand1 / operand2;
+  }
+}
+
+int main() {
+  string postfixExpression;
+  stack<int> s;
+
+  cout << "Enter postfix expression: ";
+  cin >> postfixExpression;
+
+  for (int i = 0; i < postfixExpression.length(); i++) {
+    char ch = postfixExpression[i];
+
+    if (isdigit(ch)) {
+      s.push(ch - '0');
+    } else if (isOperator(ch)) {
+      int operand1 = s.top();
+      s.pop();
+
+      int operand2 = s.top();
+      s.pop();
+
+      int result = evaluate(ch, operand1, operand2);
+      s.push(result);
+    }
+  }
+
+  cout << "Result: " << s.top() << endl;
+
+  return 0;
+}
+
