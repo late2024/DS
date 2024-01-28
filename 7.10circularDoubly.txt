@@ -31,7 +31,7 @@ node *ptr = head;
 printf("\n[");
 while(ptr != NULL)
 {
-printf("(%d%d) ",ptr->key,ptr->data);
+printf("(%d %d) ",ptr->key,ptr->data);
 ptr = ptr->next;
 }
 printf("]");
@@ -42,7 +42,7 @@ node *ptr= last;
 printf("\n[");
 while(ptr != NULL)
 {
-printf("(%d%d) ",ptr->key,ptr->data);
+printf("(%d %d) ",ptr->key,ptr->data);
 ptr = ptr->prev;
 }
 printf("]");
@@ -180,12 +180,12 @@ return true;
 }
 main()
 {
-insertFirst(1,10);
-insertFirst(2,20);
-insertFirst(3,30);
-insertFirst(4,1);
-insertFirst(5,40);
-insertFirst(6,56);
+insertFirst(1,45);
+insertFirst(2,58);
+insertFirst(3,48);
+insertFirst(4,45);
+insertFirst(5,69);
+insertFirst(6,25);
 printf("\n List (First to Last):");
 displayForward();
 printf("\n List (Last to First):");
