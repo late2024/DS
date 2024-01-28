@@ -50,7 +50,7 @@ long long kruskal(pair<long long, pair<int, int>> p[])
 
 int main()
 {
-    cout << "Bhushan 09: \n";
+    cout << "latecommers: \n";
     int x, y;
     long long weight, cost, minimumCost;
     init();
