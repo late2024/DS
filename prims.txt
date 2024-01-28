@@ -64,7 +64,7 @@ void find_MST(int cost[V][V])
 
 int main()
 {
-    cout << "bhushan09: \n";
+    cout << "late commers \n";
     int cost[V][V];
     cout << "Enter the Weighted Adjacency Matrix for a graph with 6 vertices:\n";
 
